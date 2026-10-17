@@ -946,11 +946,12 @@ def _warm_floor_auto_policy(bt, demand_factor: float) -> str:
         WARM_FLOOR_LEVEL_KEEP_HOT,
     }
     if current not in valid:
-        # Bootstrap conservatively. The first eligible at/above-target window
-        # gets a strong baseline, then later ticks may choose another policy
-        # after proof of the live trend. This state is policy-only; the caller still blocks the
-        # below-target region before sending anything.
-        current = WARM_FLOOR_LEVEL_KEEP_HOT
+        # Bootstrap from the live diagnostics immediately. Starting every
+        # room at Keep it Hot makes a materially overheated room add heat for
+        # the confirmation/dwell window before Auto is allowed to correct it.
+        # The candidate already applies the target margin, slope/EMA and load
+        # evidence rules; hysteresis is only needed after this first choice.
+        current = _warm_floor_auto_candidate(bt, demand_factor)
         bt._warm_floor_auto_policy = current
         bt._warm_floor_auto_policy_since = now
         bt._warm_floor_auto_candidate = current

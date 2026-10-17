@@ -460,7 +460,7 @@ def test_warm_floor_level_changes_generic_duty_intensity():
     assert eco_profile < balanced_profile < keep_hot_profile
 
 
-def test_auto_bootstraps_keep_hot_before_confirming_warming(monkeypatch):
+def test_auto_bootstraps_from_diagnostics_before_confirming_warming(monkeypatch):
     bt = _make_bt(warm_floor_level=underfloor.WARM_FLOOR_LEVEL_AUTO)
     bt.cur_temp_filtered = 22.1
     bt.external_temp_ema = 22.1
@@ -473,9 +473,9 @@ def test_auto_bootstraps_keep_hot_before_confirming_warming(monkeypatch):
         bt, bt.real_trvs["climate.trv"], demand_factor=0.4
     )
 
-    assert bt._warm_floor_auto_policy == underfloor.WARM_FLOOR_LEVEL_KEEP_HOT
+    assert bt._warm_floor_auto_policy == underfloor.WARM_FLOOR_LEVEL_ECO
     assert first == underfloor.WARM_FLOOR_LEVEL_INTENSITY[
-        underfloor.WARM_FLOOR_LEVEL_KEEP_HOT
+        underfloor.WARM_FLOOR_LEVEL_ECO
     ]
 
     # Strong warming is first confirmed, then Auto can move directly to Eco
@@ -964,7 +964,7 @@ def test_auto_warm_floor_bootstraps_and_moves_with_confirmed_trend(monkeypatch):
     monkeypatch.setattr(underfloor, "monotonic", lambda: clock[0])
 
     underfloor._effective_duty_profile(bt, trv, 0.0)
-    assert bt._warm_floor_auto_policy == underfloor.WARM_FLOOR_LEVEL_KEEP_HOT
+    assert bt._warm_floor_auto_policy == underfloor.WARM_FLOOR_LEVEL_ECO
 
     bt.cur_temp_filtered = 22.4
     bt.external_temp_ema = 22.4

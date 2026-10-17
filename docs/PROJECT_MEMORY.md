@@ -140,6 +140,17 @@
   legacy maintenance test file still contains eight pre-existing references to
   removed APIs and is not part of this change.
 
+### 2026-10-17 — Auto bootstrap follows target-centred control immediately
+
+- Removed the unconditional `Keep it Hot` bootstrap for Auto.
+- The first eligible control pass now selects Eco, Balanced, or Keep it Hot
+  from the current target margin and diagnostics, so an already-overheated
+  room begins reducing maintenance immediately.
+- As the room approaches `target + 0.1°C`, cooling/EMA/load evidence can
+  progressively restore a stronger Warm Floor duty cycle to hold the room
+  near neutral slope instead of allowing it to cross into normal heating.
+- Updated regression coverage for the first Auto decision.
+
 
 ### 2026-10-15 — Separate plant load from target-aligned Warm Floor demand
 
