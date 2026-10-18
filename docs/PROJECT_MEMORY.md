@@ -1938,3 +1938,15 @@ for all supported Home Assistant installations.
 - Added regression coverage for the exact-target OFF-window case. The change
   is generic and does not reference any room, relay, integration, or heat
   source.
+
+### 2026-10-18 — Publish a HACS-compatible DEV version
+
+- **Problem:** HACS could install the DEV branch by commit SHA, but could not
+  reliably update/install it as an integration version because the repository
+  had no remote version tag/release. HACS reported that the selected version
+  could not be used.
+- **Change:** Synchronized `manifest.json`, `pyproject.toml`, and the README
+  version badge at `1.9.3.1.5`. The current DEV state will be published with
+  the matching tag so HACS can select a real version instead of a commit SHA.
+- **Scope:** Packaging only; no Warm Floor, Boost, target, preset, relay, or
+  heat-source behavior was changed. `climate.tatas` remains out of scope.
