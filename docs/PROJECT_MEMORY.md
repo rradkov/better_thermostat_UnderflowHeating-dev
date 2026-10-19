@@ -22,6 +22,11 @@
 - **Verification:** Warm Floor and status-sensor focused tests pass (74
   tests). No `climate.tatas` access or installation-specific hardware rule
   was added.
+- **Commit/deployment:** Committed as `c72db98` with a descriptive commit
+  message and pushed to the DEV repository. HACS installed exactly
+  `c72db98` in Home Assistant and the restart completed; HACS reports the
+  same installed and available commit with no pending update. No release was
+  created.
 
 ### 2026-10-15 — Auto direct policy selection
 
